@@ -1,15 +1,25 @@
 package com.mms.mms.user.api
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import com.mms.mms.user.dao.UserRepository
+import com.mms.mms.user.domain.User
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 
 @RestController
 @RequestMapping("/user")
-class User {
+class User(private val userRepository: UserRepository) {
+
+
     @GetMapping
-    fun getAllUsers(): String {
-        return "['user1','user2']"
+    fun getAllUsers(): ResponseEntity<List<UserRepository>> {
+        return ResponseEntity.ok(this.userRepository.findAll())
+    }
+
+    @PostMapping
+    fun addUser(@RequestBody user: User) : String {
+        println(user.name)
+        var savedUser : User = this.userRepository!!.save(User(user.name))
+        return savedUser.id
     }
 }
