@@ -26,6 +26,9 @@ dependencies {
 	implementation("org.springframework.data:spring-data-mongodb:3.2.9")
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb:2.6.3")
+	// https://mvnrepository.com/artifact/com.google.code.gson/gson
+	implementation("com.google.code.gson:gson:2.8.9")
+
 
 
 }
