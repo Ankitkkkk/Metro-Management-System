@@ -2,55 +2,34 @@ package com.mms.mms.user.service
 
 import com.google.gson.JsonObject
 import com.mms.infrastructure.exception.ExceptionInfo
-import com.mms.infrastructure.exception.ValidationException
-import com.mms.mms.Constants
+import com.mms.infrastructure.serialization.CommandExtractor
+import com.mms.infrastructure.validators.JsonValidators
+import com.mms.mms.user.domain.UserMongo
 import org.springframework.stereotype.Service
 
 @Service
 class UserValidator {
     var command: JsonObject? = null
     var exceptionInfo = ExceptionInfo()
-    val allowedAttributes: Set<String> = setOf("name","age","amount")
+    val allowedAttributes: Set<String> = setOf("name","email","password")
 
-    public fun validateForCreate(command: JsonObject?) {
+    fun createAndValidateUserDataFromJson(command: JsonObject) : UserMongo {
+        this
+            .setCommand(command)
+            .validateForCreate()
+        val commandExtractor = CommandExtractor(command)
+        val name = commandExtractor.extractStringParameterNamed("name")
+        val email = commandExtractor.extractStringParameterNamed("email")
+        return UserMongo(name,email)
+    }
+
+    fun validateForCreate() {
+        val jsonValidators = JsonValidators(this.command!!,allowedAttributes)
+        jsonValidators.validateForMissing()
+        jsonValidators.validateForRequired()
+    }
+    fun setCommand(command: JsonObject): UserValidator {
         this.command = command
-        exceptionInfo = ExceptionInfo()
-        validateForAllowed()
-        validateForMissing()
-
+        return this
     }
-    fun validateForAllowed() {
-        val keys: Set<String> = command!!.keySet()
-        // Exception info updated
-        exceptionInfo.reason = Constants.BAD_PARAM
-
-        for(attribute in keys) {
-            if(!allowedAttributes.contains(attribute)) {
-                val exceptionTOBeAdded = JsonObject()
-                exceptionTOBeAdded.add(attribute,command!!.get(attribute))
-                exceptionInfo.addExceptionToList(exceptionTOBeAdded)
-            }
-        }
-        if(exceptionInfo.sizeOfListOfExceptions() != 0) {
-            throw ValidationException(exceptionInfo)
-        }
-    }
-    fun validateForMissing() {
-        exceptionInfo.reason = Constants.MISSING_PARAM
-
-        val keys: MutableSet<String> = command!!.keySet()
-        val shouldBePresent : MutableSet<String> = allowedAttributes.toMutableSet()
-        for(attributes in keys) {
-            shouldBePresent.remove(attributes)
-        }
-
-        for (attribute in shouldBePresent) {
-            val exceptionTOBeAdded = JsonObject()
-            exceptionTOBeAdded.add(attribute,command!!.get(attribute))
-            exceptionInfo.addExceptionToList(exceptionTOBeAdded)
-        }
-
-        if (exceptionInfo.sizeOfListOfExceptions() != 0) throw ValidationException(exceptionInfo)
-    }
-
 }
