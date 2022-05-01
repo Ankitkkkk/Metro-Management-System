@@ -31,7 +31,7 @@ class SecurityConfiguration(private val userService: UserAuthService,
             .permitAll()
             .and()
             .authorizeRequests()
-            .antMatchers(HttpMethod.POST,"/user/login")
+            .antMatchers(HttpMethod.GET,"/user/login")
             .permitAll()
             .and()
             .authorizeRequests()
