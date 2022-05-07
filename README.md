@@ -9,9 +9,9 @@ a typical backend project for DMRC daily operations
 ### Open intellij inside the folder Metro-Management-System
 create a branch from main format `dev-<username>` ignore angular braces
 after making changes to your branch
-run these commands
-####`git remote add origin https://github.com/Ankitkkkk/Metro-Management-System.git`
-####`git push origin dev-<username>`
+run these commands <br />
+`git remote add origin https://github.com/Ankitkkkk/Metro-Management-System.git` <br />
+`git push origin dev-<username>` <br />
 
 # CAUTION NEVER PUSH TO `main` BRANCH
 
