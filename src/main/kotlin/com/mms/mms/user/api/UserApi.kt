@@ -29,7 +29,11 @@ class UserApi(private val userWriteService: UserWriteService,
            ) {
 
 
-
+/*
+* Integer var = 8;
+* val name
+*
+* */
 
     var helper: JsonApiHelper? = null
 

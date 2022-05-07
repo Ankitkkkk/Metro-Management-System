@@ -29,8 +29,8 @@ class JsonValidators(var command: JsonObject,
     fun validateForMissing() {
         exceptionInfo.reason = Constants.MISSING_PARAM
 
-        val keys: MutableSet<String> = command.keySet()
-        val shouldBePresent : MutableSet<String> = allowedAttributes.toMutableSet()
+        val keys: MutableSet<String> = command.keySet() //
+        val shouldBePresent : MutableSet<String> = allowedAttributes.toMutableSet() //   password
         for(attributes in keys) {
             shouldBePresent.remove(attributes)
         }
