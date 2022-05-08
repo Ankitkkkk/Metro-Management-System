@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 class Api {
     @GetMapping
     fun health() : String {
-        return "200 not okgit"
+        return "200 ok ok"
     }
 }
 
