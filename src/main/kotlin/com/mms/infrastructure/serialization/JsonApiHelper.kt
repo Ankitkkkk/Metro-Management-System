@@ -51,4 +51,8 @@ class JsonApiHelper(var command: JsonObject = JsonObject(),
         this.token = token
         return this
     }
+
+    fun <T> toJson(entity : T) : String {
+        return gson.toJson(entity)
+    }
 }

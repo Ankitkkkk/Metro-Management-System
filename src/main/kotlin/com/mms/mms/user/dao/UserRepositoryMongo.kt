@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface UserRepositoryMongo : MongoRepository<UserMongo, String> {
-//    fun findBy UserMongo
+
+
 }

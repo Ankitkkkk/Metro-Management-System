@@ -71,7 +71,17 @@ class UserApi(private val userWriteService: UserWriteService,
         return ResponseEntity.ok(userReadService.generateToken(command))
     }
 
+    @GetMapping
+    fun getAllUsers(@RequestHeader("api-key") key : String, @RequestHeader("Authorization") token : String): ResponseEntity<String>{
+        var apiKey : String? = key
+        if (apiKey == null) {
+            apiKey = "no.key.supplied"
+        }
+            helper = JsonApiHelper().setAuthorityForCommand(apiKey)
 
+        helper!!.token =token.substring(7)
+        return ResponseEntity.ok(helper!!.toJson(userReadService.getUserDataFromMongoDB(helper!!)))
+    }
 
 //    @GetMapping
 //    fun getUsers(@RequestHeader("api-key") key: String?,
