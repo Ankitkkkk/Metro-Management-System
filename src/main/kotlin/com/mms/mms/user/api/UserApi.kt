@@ -77,8 +77,8 @@ class UserApi(private val userWriteService: UserWriteService,
         helper =JsonApiHelper(email)
             .validateJsonString()
             .jsonCommandGenerator()
-        println("${helper!!.command.get("email")}")
-        return ResponseEntity.ok(userReadService.emailSearchInMySQL(helper!!.command.get("email").toString()))
+        println("${helper!!.command.get("email").asString}")
+        return ResponseEntity.ok(userReadService.emailSearchInMySQL(helper!!.command.get("email").asString))
     }
 
 
