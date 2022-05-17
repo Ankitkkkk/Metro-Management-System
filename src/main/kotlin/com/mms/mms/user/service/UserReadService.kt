@@ -3,6 +3,7 @@ package com.mms.mms.user.service
 import com.google.gson.JsonObject
 import com.mms.infrastructure.exception.BadLoginCredentialException
 import com.mms.infrastructure.serialization.CommandExtractor
+import com.mms.infrastructure.serialization.JsonApiHelper
 import com.mms.mms.security.service.UserAuthService
 import com.mms.mms.security.token.JwtUtil
 import com.mms.mms.user.dao.UserRepositorySql
@@ -56,5 +57,9 @@ class UserReadService(private val userAuthService: UserAuthService,
             val user = userRepositorySql.findByToken()
         }
         return ""
+    }
+
+    fun emailSearchInMySQL (email : String) : String{
+        return userRepositorySql.existsByEmail(email).toString()
     }
 }

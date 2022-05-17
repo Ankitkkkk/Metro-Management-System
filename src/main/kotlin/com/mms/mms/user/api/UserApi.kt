@@ -71,6 +71,16 @@ class UserApi(private val userWriteService: UserWriteService,
         return ResponseEntity.ok(userReadService.generateToken(command))
     }
 
+    @GetMapping("/isvalidemail")
+    fun isValidEmail (@RequestBody email : String) : ResponseEntity<String>{
+
+        helper =JsonApiHelper(email)
+            .validateJsonString()
+            .jsonCommandGenerator()
+        println("${helper!!.command.get("email")}")
+        return ResponseEntity.ok(userReadService.emailSearchInMySQL(helper!!.command.get("email").toString()))
+    }
+
 
 
 //    @GetMapping
